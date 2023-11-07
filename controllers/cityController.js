@@ -1,6 +1,6 @@
 const express = require("express");
 const cities = express.Router();
-const { getAllCities } = require("../queries/city.js");
+const { getAllCities, getCity, createCity } = require("../queries/city.js");
 
 cities.get("/", async (req, res) => {
   const allCities = await getAllCities();
@@ -9,6 +9,26 @@ cities.get("/", async (req, res) => {
     res.status(200).json(allCities);
   } else {
     res.status(500).json({ error: "Server Error" });
+  }
+});
+
+cities.get("/:id", async (req, res) => {
+  const { id } = req.params;
+  const oneCity = await getCity(id);
+  if (oneCity) {
+    res.status(200).json(oneCity);
+  } else {
+    res.status(404).json({ message: "City Not Found" });
+  }
+});
+
+cities.post("/", async (req, res) => {
+  const body = req.body;
+  const city = await createCity(body);
+  if (city) {
+    res.status(200).json(city);
+  } else {
+    res.status(404).json({ message: "Unable to add the city" });
   }
 });
 
