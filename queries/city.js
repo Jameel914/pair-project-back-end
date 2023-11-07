@@ -38,4 +38,16 @@ const createCity = async (city) => {
   }
 };
 
-module.exports = { getAllCities, getCity, createCity };
+const deleteCity = async (id) => {
+  try {
+    const deletedCity = await db.one(
+      "DELETE FROM cities WHERE id=$1 RETURNING *",
+      id
+    );
+    return deletedCity;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getAllCities, getCity, createCity, deleteCity };
