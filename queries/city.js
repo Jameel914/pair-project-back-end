@@ -50,4 +50,25 @@ const deleteCity = async (id) => {
   }
 };
 
-module.exports = { getAllCities, getCity, createCity, deleteCity };
+const updateCity = async (id, city) => {
+  try {
+    const updatedCity = await db.one(
+      "UPDATE cities SET name=$1, image=$2, population=$3, area=$4, annual_visitors=$5, currency=$6, is_capital=$7 WHERE id=$8 RETURNING *",
+      [
+        city.name,
+        city.image,
+        city.population,
+        city.area,
+        city.annual_visitors,
+        city.currency,
+        city.is_capital,
+        id,
+      ]
+    );
+    return updatedCity;
+  } catch (error) {
+    return error;
+  }
+};
+
+module.exports = { getAllCities, getCity, createCity, deleteCity, updateCity };

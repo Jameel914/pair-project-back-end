@@ -5,6 +5,7 @@ const {
   getCity,
   createCity,
   deleteCity,
+  updateCity,
 } = require("../queries/city.js");
 
 cities.get("/", async (req, res) => {
@@ -44,6 +45,17 @@ cities.delete("/:id", async (req, res) => {
     res.status(200).json(deletedCity);
   } else {
     res.status(404).json({ error: "Unable to delete thhe city" });
+  }
+});
+
+cities.put("/:id", async (req, res) => {
+  const { id } = req.params;
+  const body = req.body;
+  const updatedCity = await updateCity(id, body);
+  if (updatedCity.id) {
+    res.status(200).json(updatedCity);
+  } else {
+    res.status(404).json({ error: "Unable to update the city" });
   }
 });
 
