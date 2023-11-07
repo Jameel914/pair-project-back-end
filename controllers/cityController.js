@@ -8,6 +8,8 @@ const {
   updateCity,
 } = require("../queries/city.js");
 
+const { checkName, checkCurrency } = require("../validations/checkCity.js");
+
 cities.get("/", async (req, res) => {
   const allCities = await getAllCities();
   console.log(allCities);
@@ -28,7 +30,7 @@ cities.get("/:id", async (req, res) => {
   }
 });
 
-cities.post("/", async (req, res) => {
+cities.post("/", checkName, checkCurrency, async (req, res) => {
   const body = req.body;
   const city = await createCity(body);
   if (city) {
@@ -48,7 +50,7 @@ cities.delete("/:id", async (req, res) => {
   }
 });
 
-cities.put("/:id", async (req, res) => {
+cities.put("/:id", checkName, checkCurrency, async (req, res) => {
   const { id } = req.params;
   const body = req.body;
   const updatedCity = await updateCity(id, body);
