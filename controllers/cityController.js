@@ -21,7 +21,7 @@ cities.get("/", async (req, res) => {
 });
 
 cities.get("/:id", async (req, res) => {
-  const { id } = req.params;
+  const id = Number(req.params.id);
   const oneCity = await getCity(id);
   if (oneCity) {
     res.status(200).json(oneCity);
