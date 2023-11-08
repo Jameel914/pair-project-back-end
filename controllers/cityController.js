@@ -41,7 +41,7 @@ cities.post("/", checkName, checkCurrency, async (req, res) => {
 });
 
 cities.delete("/:id", async (req, res) => {
-  const id = NUmber(req.params.id);
+  const id = Number(req.params.id);
   const deletedCity = await deleteCity(id);
   if (deletedCity.id) {
     res.status(200).json(deletedCity);
@@ -51,7 +51,7 @@ cities.delete("/:id", async (req, res) => {
 });
 
 cities.put("/:id", checkName, checkCurrency, async (req, res) => {
-  const id = NUmber(req.params.id);
+  const id = Number(req.params.id);
   const body = req.body;
   const updatedCity = await updateCity(id, body);
   if (updatedCity.id) {
